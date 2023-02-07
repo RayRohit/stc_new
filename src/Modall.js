@@ -1,4 +1,5 @@
 import React from "react";
+import { Carousel } from "react-bootstrap";
 
 export default function Modall(props) {
   const urls = props.urls;
@@ -8,11 +9,16 @@ export default function Modall(props) {
     props.remDisplay([]);
   };
   const handleDownload = () => {
-    const a = document.createElement("a");
-    a.href = `http://216.48.186.249:5002/${urls[0]}`;
-    a.download = `http://216.48.186.249:5002/${urls[0]}`;
-    document.body.appendChild(a);
-    a.click();
+    urls.map((item) => {
+      if (item === props.display) {
+        const a = document.createElement("a");
+        a.href = `http://216.48.186.249:5002/${item}`;
+        a.download = `http://216.48.186.249:5002/${item}`;
+        document.body.appendChild(a);
+        a.click();
+      }
+    });
+
     // a.click();
   };
   console.log(props.display);
@@ -30,33 +36,37 @@ export default function Modall(props) {
             ></button>
           </div>
           <div className="modal-body">
-            <div
+            <Carousel>
+              {props.display.map((item, index) => (
+                <Carousel.Item key={index}>
+                  <video
+                    controls
+                    autoPlay
+                    src={`http://216.48.186.249:5002/${item}`}
+                    style={{ width: "100%" }}
+                  />
+                </Carousel.Item>
+              ))}
+            </Carousel>
+            {/* <div
               id="carouselExampleControls"
               className="carousel slide"
               data-bs-ride="carousel"
             >
-              <div className="carousel-inner">
-                {props.display.map((item) => {
-                  console.log(item, "item");
-                  return (
+              {props.display.map((item, index) => {
+                return (
+                  <div className="carousel-inner" key={index}>
                     <div className="carousel-item active">
                       <video
                         controls
                         autoPlay
                         src={`http://216.48.186.249:5002/${item}`}
                         style={{ width: "100%" }}
-                      />  
+                      />
                     </div>
-                  );
-                })}
-
-                {/* <div class="carousel-item">
-                  <img src="..." class="d-block w-100" alt="..." />
-                </div>
-                <div class="carousel-item">
-                  <img src="..." class="d-block w-100" alt="..." />
-                </div> */}
-              </div>
+                  </div>
+                );
+              })}
               <button
                 class="carousel-control-prev"
                 type="button"
@@ -81,13 +91,7 @@ export default function Modall(props) {
                 ></span>
                 <span class="visually-hidden">Next</span>
               </button>
-            </div>
-            {/* <video
-              controls
-              autoPlay
-              src={`http://216.48.186.249:5002/${props.display[0]}`}
-              style={{ width: "100%" }}
-            /> */}
+            </div> */}
           </div>
           <div className="modal-footer">
             <button
