@@ -1,141 +1,137 @@
 import React, { useEffect, useState } from "react";
+// import bg from "./images/stcwall.avif";
 import bg from "./images/wal.jpg";
 import Dropzone from "./Dropzone";
 import axios from "axios";
+import { Modal, Button } from "react-bootstrap";
 import Modall from "./Modall";
-import { MdDelete } from "react-icons/md";
 
-export default function FormPage() {
+export default function Copy() {
   const [files, setFiles] = useState([]);
-  const [questions, setQuestions] = useState([
-    {
-      question: "",
-      answer: "",
-    },
-  ]);
 
   const { renderVideo } = Dropzone({ files, setFiles });
-  const [googleSelected, setGoogleSelected] = useState(false);
   const [checkedd, setChecked] = useState("");
   const [textRes, setTextRes] = useState(null);
-  // const [text, setText] = useState("");
-  // const [quest, setQuest] = useState("");
+  const [text, setText] = useState("");
+  const [quest, setQuest] = useState("");
   const [option, setOption] = useState("");
-  const [videoUrl, setVideoUrl] = useState([]);
-  const [down, setDown] = useState([]);
-  const handleSubmit = async (e) => {
+  const [videoUrl, setVideoUrl] = useState(null);
+  const [down, setDown] = useState(null);
+  const handleSubmit = (e) => {
     e.preventDefault();
-    let url = googleSelected
-      ? "http://216.48.186.249:5002/cloning"
-      : "http://216.48.186.249:5002/voicecloning";
+    if (option === "google") {
+      console.log(textRes);
 
-    // questions.forEach((question) => {
-    //   const videos = files[0];
-    //   const formData = new FormData();
-    //   formData.append("videos", videos);
-    //   formData.append(
-    //     "textRes",
-    //     googleSelected ? question.question : question.answer
-    //   );
-    //   formData.append("formatType", checkedd);
-    //   axios
-    //     .post(url, formData)
-    //     .then((res) => {
-    //       console.log(res);
-    //       setVideoUrl(res.data.file_path);
-    //       console.log(videoUrl);
-    //       setDown(res.data.mp4_path);
-    //       console.log(videoUrl);
-    //       setFiles([]);
-    //       setOption("");
-    //       setTextRes("");
-    //       setChecked("");
-    //       setQuestions([
-    //         {
-    //           question: "",
-    //           answer: "",
-    //         },
-    //       ]);
-    //     })
-    //     .catch((err) => console.log(err));
-    // });
-
-    for (const question of questions) {
       const videos = files[0];
       const formData = new FormData();
       formData.append("videos", videos);
-      formData.append(
-        "textRes",
-        googleSelected ? question.question : question.answer
-      );
+      formData.append("textRes", textRes);
       formData.append("formatType", checkedd);
+      axios
+        .post("http://216.48.186.249:5002/cloning", formData)
+        .then((res) => {
+          console.log(res);
+          setVideoUrl(res.data.file_path);
+          setDown(res.data.mp4_path)
+          console.log(videoUrl);
 
-      const res = await axios.post(url, formData);
-      console.log(res);
+          // const a = document.createElement("a");
+          // a.href = `http://216.48.186.249:5002/${res.data.file_path}`;
+          // a.click();
+          setFiles([]);
+          setOption("");
+          setTextRes("");
+          setChecked("");
+        })
+        .catch((err) => console.log(err));
 
-      setVideoUrl([...res.data.file_path]);
-      console.log(videoUrl);
-      setDown([...res.data.mp4_path]);
+      // axios
+      //   .post("http://172.107.57.134:8095/dialogFlow", {
+      //     languageCode: "en",
+      //     sessionId: "NewSession",
+      //     queryText: quest,
+      //   })
+      //   .then((res) => {
+      //     const charText = res.data.response.split(".")[0];
+      //     setTextRes(charText);
+      //     console.log(charText);
+      //   })
+      //   .catch((err) => console.log(err));
+    } else {
+      // setTextRes(text);
+      console.log(textRes);
+      const videos = files[0];
+      const formData = new FormData();
+      formData.append("videos", videos);
+      formData.append("textRes", textRes);
+      formData.append("formatType", checkedd);
+      axios
+        .post("http://216.48.186.249:5002/voicecloning", formData)
+        .then((res) => {
+          console.log(res);
+          setVideoUrl(res.data.file_path);
+          setDown(res.data.mp4_path)
+          setFiles([]);
+          setQuest("");
+          setTextRes("");
+          setChecked("");
+          // const a = document.createElement("a");
+          // a.href = `http://216.48.186.249:5002/${res.data.file_path}`;
+          // a.click();
+          // setFiles([]);
+          // setText("");
+          // setQuest("");
+          // setChecked("");
+        });
     }
-    console.log(videoUrl, "videoUrl", down, "down");
-
-    setFiles([]);
-    setOption("");
-    setTextRes("");
-    setChecked("");
-    setQuestions([
-      {
-        question: "",
-        answer: "",
-      },
-    ]);
-
-    // if (googleSelected) {
-    // } else {
-    //   // setTextRes(text);
-    //   console.log(textRes);
-    //   const videos = files[0];
-    //   const formData = new FormData();
-    //   formData.append("videos", videos);
-    //   formData.append("textRes", textRes);
-    //   formData.append("formatType", checkedd);
-    //   axios
-    //     .post("http://216.48.186.249:5002/voicecloning", formData)
-    //     .then((res) => {
-    //       console.log(res);
-    //       setVideoUrl(res.data.file_path);
-    //       setDown(res.data.mp4_path);
-    //       setFiles([]);
-    //       setQuest("");
-    //       setTextRes("");
-    //       setChecked("");
-    //     });
-    // }
+    // axios
+    //   .post("http://172.107.57.134:8095/dialogFlow", {
+    //     languageCode: "en",
+    //     sessionId: "NewSession",
+    //     queryText: text,
+    //   })
+    //   .then((res) => {
+    //     // const charText = res.data.response.split('.').splice(0,20).join(' ')
+    //     const charText = res.data.response.split(".")[0];
+    //     // setTextRes(res.data.response);
+    //     setTextRes(charText);
+    //     console.log(charText);
+    //   })
+    //   .catch((err) => console.log(err));
   };
 
-  const onTextChange = (value, index, type) => {
-    const ques = [...questions];
-    ques[index][type] = value;
-    setQuestions(ques);
-  };
+  // useEffect(() => {
+  //   if (textRes !== null) {
+  //     if (option === "google") {
+  //       const videos = files[0];
+  //       const formData = new FormData();
+  //       formData.append("textRes", textRes);
+  //       formData.append("videos", videos);
+  //       formData.append("formatType", checked);
 
-  const addNewQuestion = () => {
-    let ques = [
-      ...questions,
-      {
-        question: "",
-        answer: "",
-      },
-    ];
-    setQuestions(ques);
-  };
-
-  const deleteQuestion = (index) => {
-    let ques = [...questions];
-    ques.splice(index, 1);
-    setQuestions(ques);
-  };
-
+  //       axios
+  //         .post("http://216.48.186.249:5002/voicecloning", formData)
+  //         .then((res) => {
+  //           console.log(res);
+  //           const a = document.createElement("a");
+  //           a.href = `http://216.48.186.249:5002/${res.data.file_path}`;
+  //           a.click();
+  //           setFiles([]);
+  //           setTextRes("");
+  //           setChecked("");
+  //           setOption("");
+  //         })
+  //         .catch((err) => console.log(err));
+  //     }
+  //   }
+  // }, [textRes]);
+  // useEffect(()=>{
+  //   <Modall />
+  // },[])
+  // const handleClose = () => {
+  //   setShowForm(true);
+  //   setVideoUrl(null);
+  // };
   return (
     <>
       <div
@@ -147,14 +143,9 @@ export default function FormPage() {
           objectFit: "cover",
         }}
       >
-        {videoUrl.length !==0 ? (
+        {videoUrl ? (
           <>
-            <Modall
-              url={videoUrl}
-              display={down}
-              remDisplay={setDown}
-              video={setVideoUrl}
-            />
+            <Modall url={videoUrl} display={down} remDisplay={setDown} video={setVideoUrl} />
           </>
         ) : (
           <>
@@ -186,9 +177,10 @@ export default function FormPage() {
                   className="d-flex justify-content-start align-items-center "
                   style={{ height: "100%" }}
                 >
-                  <div
+                  <form
                     className="shadow-lg bg-white mb-3 mt-5 mx-auto"
                     style={{ borderRadius: "20px" }}
+                    onSubmit={handleSubmit}
                   >
                     <h5 className="text-center py-4 fw-bolder">Magic Maker!</h5>
                     <div className="row">
@@ -204,16 +196,15 @@ export default function FormPage() {
                         </label>
                         <input
                           className="form-check-input"
-                          type="checkbox"
-                          value={googleSelected}
+                          type="radio"
+                          value={"google"}
                           id="flexCheckDefault"
                           name="optionFormat"
-                          checked={googleSelected}
-                          onChange={() => setGoogleSelected((x) => !x)}
+                          onChange={() => setOption("google")}
                         />
                       </div>
                     </div>
-                    {/* {googleSelected ? (
+                    {option === "google" ? (
                       <>
                         <div className="px-4 mb-3">
                           <textarea
@@ -269,67 +260,41 @@ export default function FormPage() {
                           />
                         </div>
                       </>
-                    )} */}
-                    {questions.map((question, index) => (
-                      <>
-                        <div className="px-4 mb-3">
-                          <textarea
-                            maxLength="50"
-                            rows={2}
-                            cols={48}
-                            style={{
-                              resize: "none",
-                              background: "#fafafa",
-                              color: "#bdbdbd",
-                            }}
-                            className="border-0 shadow p-3"
-                            placeholder="Type your question"
-                            name="quest"
-                            value={question.question}
-                            onChange={(e) =>
-                              onTextChange(e.target.value, index, "question")
-                            }
-                          />
-                        </div>
-                        {!googleSelected && (
-                          <div className="px-4 mb-3">
-                            <textarea
-                              rows={4}
-                              cols={48}
-                              style={{
-                                resize: "none",
-                                background: "#fafafa",
-                                color: "#bdbdbd",
-                              }}
-                              className="border-0 shadow p-3"
-                              placeholder="Type your answer"
-                              name="text"
-                              value={question.answer}
-                              onChange={(e) =>
-                                onTextChange(e.target.value, index, "answer")
-                              }
-                            />
-                            <button
-                              className="btn btn-danger ms-2"
-                              aria-label="Close"
-                              onClick={() => deleteQuestion(index)}
-                              disabled={questions.length === 1}
-                            >
-                              {/* Delete */}
-                              <MdDelete />
-                            </button>
-                          </div>
-                        )}
-                      </>
-                    ))}
-
-                    <button
-                      className="btn btn-labeled btn-primary btn-lg my-b mx-4 p-1 fs-6"
-                      onClick={() => addNewQuestion()}
-                      disabled={questions.length >= 5}
-                    >
-                      Add Question
-                    </button>
+                    )}
+                    {/* <div className="px-4 mb-3">
+                  <textarea
+                    maxLength="50"
+                    rows={2}
+                    cols={48}
+                    style={{
+                      resize: "none",
+                      background: "#fafafa",
+                      color: "#bdbdbd",
+                    }}
+                    className="border-0 shadow p-3"
+                    placeholder="Type your question"
+                    name="quest"
+                    value={quest}
+                    onChange={(e) => setQuest(e.target.value)}
+                  />
+                </div>
+                <div className="px-4 mb-3">
+                  <textarea
+                    maxLength="50"
+                    rows={4}
+                    cols={48}
+                    style={{
+                      resize: "none",
+                      background: "#fafafa",
+                      color: "#bdbdbd",
+                    }}
+                    className="border-0 shadow p-3"
+                    placeholder="Type your answer"
+                    name="text"
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                  />
+                </div> */}
                     <div className="shadow mx-4 p-2 mb-3">
                       <div className=" p-1">
                         <h6 style={{ fontSize: "18px" }}>
@@ -389,8 +354,8 @@ export default function FormPage() {
                     </div>
                     <div className="d-flex justify-content-end pe-4">
                       <button
+                        type="submit"
                         className="btn btn-labeled btn-primary btn-lg my-3"
-                        onClick={handleSubmit}
                       >
                         Submit
                         <span className="btn-label">
@@ -398,7 +363,12 @@ export default function FormPage() {
                         </span>
                       </button>
                     </div>
-                  </div>
+                  </form>
+                  {/* <video
+                      controls
+                      src={`http://216.48.186.249:5002/${videoUrl}`}
+                    />
+                    <button className="btn btn-danger" onClick={handleClose}>X</button> */}
                 </div>
               </div>
             </div>
