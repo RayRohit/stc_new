@@ -9,15 +9,13 @@ export default function Modall(props) {
     props.remDisplay([]);
   };
   const handleDownload = () => {
-    urls.map((item) => {
-      if (item === props.display) {
+   
         const a = document.createElement("a");
-        a.href = `http://216.48.186.249:5002/${item}`;
-        a.download = `http://216.48.186.249:5002/${item}`;
+        a.href = `http://216.48.186.249:5002/${urls[0]}`;
+        a.download = `http://216.48.186.249:5002/${urls[0]}`;
         document.body.appendChild(a);
         a.click();
-      }
-    });
+      
 
     // a.click();
   };
