@@ -73,11 +73,11 @@ export default function FormPage() {
       const res = await axios.post(url, formData);
       console.log(res);
 
-      setVideoUrl([...res.data.file_path]);
-      console.log(videoUrl);
-      setDown([...res.data.mp4_path]);
+      setVideoUrl((prevVal) => [...prevVal, res.data.file_path]);
+      // console.log(videoUrl);
+      setDown((prevVal) => [...prevVal, res.data.mp4_path]);
+      console.log(down);
     }
-    console.log(videoUrl, "videoUrl", down, "down");
 
     setFiles([]);
     setOption("");
@@ -147,10 +147,10 @@ export default function FormPage() {
           objectFit: "cover",
         }}
       >
-        {videoUrl.length !==0 ? (
+        {videoUrl.length !== 0 ? (
           <>
             <Modall
-              url={videoUrl}
+              urls={videoUrl}
               display={down}
               remDisplay={setDown}
               video={setVideoUrl}
