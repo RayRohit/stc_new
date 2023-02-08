@@ -3,6 +3,7 @@ import { Carousel } from "react-bootstrap";
 
 export default function Modall(props) {
   const [active, setActive] = useState(0);
+  const [progress, setProgress] = useState(0);
   const urls = props.urls;
   const handleClose = () => {
     // props.hide(true);
@@ -17,15 +18,17 @@ export default function Modall(props) {
     a.click();
     document.body.removeChild(a);
   };
-    // useEffect(() => {
-    //   alert("Processing Video :"`${active}` )
-    // }, [active]);
 
   return (
     <div className="d-flex justify-content-between">
       <div className="modal-dialog  modal-fullscreen-sm-down py-4">
         <div className="modal-content">
           <div className="modal-header">
+            <div>
+              <h4>
+                Video Count : {active + 1}/{props.display.length}
+              </h4>
+            </div>
             <button
               type="button"
               className="btn-close"
@@ -115,7 +118,7 @@ export default function Modall(props) {
             </div> */}
           </div>
           <div className="modal-footer d-flex justify-content-between">
-            <h5>Video : {active+1}</h5>
+            <h5>Video : {active + 1}</h5>
 
             <button
               className="btn btn-primary"

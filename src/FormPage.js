@@ -4,7 +4,7 @@ import Dropzone from "./Dropzone";
 import axios from "axios";
 import Modall from "./Modall";
 import { MdDelete } from "react-icons/md";
-  
+
 export default function FormPage() {
   const [files, setFiles] = useState([]);
   const [questions, setQuestions] = useState([
@@ -18,7 +18,6 @@ export default function FormPage() {
   const [googleSelected, setGoogleSelected] = useState(false);
   const [checkedd, setChecked] = useState("");
   const [textRes, setTextRes] = useState(null);
-  const [showAlert, setShowAlert] = useState(false);
 
   // const [text, setText] = useState("");
   // const [quest, setQuest] = useState("");
@@ -73,10 +72,7 @@ export default function FormPage() {
       formData.append("formatType", checkedd);
 
       const res = await axios.post(url, formData);
-      setShowAlert(true);
-      setTimeout(() => {
-        setShowAlert(false);
-      }, 3000);
+
       console.log(res);
 
       setVideoUrl((prevVal) => [...prevVal, res.data.file_path]);
@@ -141,8 +137,7 @@ export default function FormPage() {
     ques.splice(index, 1);
     setQuestions(ques);
   };
-  console.log(window.innerWidth)
-  console.log(window.innerHeight)
+ 
 
   return (
     <>
@@ -190,7 +185,7 @@ export default function FormPage() {
               </div>
               <div className="col-sm-6 col-md-12 col-lg-6">
                 <div
-                    className="d-flex justify-content-start align-items-center "
+                  className="d-flex justify-content-start align-items-center "
                   style={{ height: "100%" }}
                 >
                   <div
@@ -404,11 +399,6 @@ export default function FormPage() {
                           <i className="fa fa-angle-right"></i>
                         </span>
                       </button>
-                      {showAlert && (
-                        <div className="alert alert-success" role="alert">
-                          Data loaded successfully!
-                        </div>
-                      )}
                     </div>
                   </div>
                 </div>
