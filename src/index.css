@@ -36,3 +36,10 @@ font-weight: 500;
 .btn {
 	margin-bottom: 10px;
 }
+.carousel-control-prev{
+  height: 350px !important;
+}
+.carousel-control-next{
+
+  height: 350px !important;
+}

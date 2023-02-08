@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Carousel } from "react-bootstrap";
 
 export default function Modall(props) {
+  const [active, setActive] = useState(0);
   const urls = props.urls;
   const handleClose = () => {
     // props.hide(true);
@@ -9,17 +10,17 @@ export default function Modall(props) {
     props.remDisplay([]);
   };
   const handleDownload = () => {
-   
-        const a = document.createElement("a");
-        a.href = `http://216.48.186.249:5002/${urls[0]}`;
-        a.download = `http://216.48.186.249:5002/${urls[0]}`;
-        document.body.appendChild(a);
-        a.click();
-      
-
-    // a.click();
+    const a = document.createElement("a");
+    a.href = `http://216.48.186.249:5002/${urls[active]}`;
+    a.download = `http://216.48.186.249:5002/${urls[active]}`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   };
-  console.log(props.display);
+  // useEffect(() => {
+  //   alert("Processing Video :"`${active}` )
+  // }, [active]);
+
   return (
     <>
       <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down py-4">
@@ -34,7 +35,29 @@ export default function Modall(props) {
             ></button>
           </div>
           <div className="modal-body">
-            <Carousel>
+            {console.log(active, "ac")}
+            <Carousel
+              interval={null}
+              activeIndex={active}
+              onSelect={(index) => {
+                setActive(index);
+              }}
+            >
+              {props.display.map((item, index) => (
+                <Carousel.Item key={index}>
+                  <video
+                    controls
+                    // autoPlay
+                    src={`http://216.48.186.249:5002/${item}`}
+                    style={{ width: "100%" }}
+                  />
+                </Carousel.Item>
+              ))}
+            </Carousel>
+            {/* <Carousel
+              activeIndex={activeIndex}
+              onSelect={(index) => setActiveIndex(index)}
+            >
               {props.display.map((item, index) => (
                 <Carousel.Item key={index}>
                   <video
@@ -45,7 +68,7 @@ export default function Modall(props) {
                   />
                 </Carousel.Item>
               ))}
-            </Carousel>
+            </Carousel> */}
             {/* <div
               id="carouselExampleControls"
               className="carousel slide"
@@ -91,7 +114,9 @@ export default function Modall(props) {
               </button>
             </div> */}
           </div>
-          <div className="modal-footer">
+          <div className="modal-footer d-flex justify-content-between">
+            <h5>Video : {active+1}</h5>
+
             <button
               className="btn btn-primary"
               onClick={() => handleDownload()}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import bg from "./images/wal.jpg";
+import bg from "./images/bg2.png";
 import Dropzone from "./Dropzone";
 import axios from "axios";
 import Modall from "./Modall";
@@ -18,6 +18,7 @@ export default function FormPage() {
   const [googleSelected, setGoogleSelected] = useState(false);
   const [checkedd, setChecked] = useState("");
   const [textRes, setTextRes] = useState(null);
+
   // const [text, setText] = useState("");
   // const [quest, setQuest] = useState("");
   const [option, setOption] = useState("");
@@ -143,8 +144,7 @@ export default function FormPage() {
         style={{
           background: `url(${bg})`,
           backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          objectFit: "cover",
+          backgroundSize: "cover ",
         }}
       >
         {videoUrl.length !== 0 ? (
