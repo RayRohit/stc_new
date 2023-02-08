@@ -17,13 +17,13 @@ export default function Modall(props) {
     a.click();
     document.body.removeChild(a);
   };
-  // useEffect(() => {
-  //   alert("Processing Video :"`${active}` )
-  // }, [active]);
+    // useEffect(() => {
+    //   alert("Processing Video :"`${active}` )
+    // }, [active]);
 
   return (
-    <>
-      <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down py-4">
+    <div className="d-flex justify-content-between">
+      <div className="modal-dialog  modal-fullscreen-sm-down py-4">
         <div className="modal-content">
           <div className="modal-header">
             <button
@@ -126,6 +126,6 @@ export default function Modall(props) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import bg from "./images/bg2.png";
+import React, { useState } from "react";
+import bg from "./images/bg1.png";
 import Dropzone from "./Dropzone";
 import axios from "axios";
 import Modall from "./Modall";
 import { MdDelete } from "react-icons/md";
-
+  
 export default function FormPage() {
   const [files, setFiles] = useState([]);
   const [questions, setQuestions] = useState([
@@ -18,6 +18,7 @@ export default function FormPage() {
   const [googleSelected, setGoogleSelected] = useState(false);
   const [checkedd, setChecked] = useState("");
   const [textRes, setTextRes] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
 
   // const [text, setText] = useState("");
   // const [quest, setQuest] = useState("");
@@ -72,6 +73,10 @@ export default function FormPage() {
       formData.append("formatType", checkedd);
 
       const res = await axios.post(url, formData);
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 3000);
       console.log(res);
 
       setVideoUrl((prevVal) => [...prevVal, res.data.file_path]);
@@ -136,6 +141,8 @@ export default function FormPage() {
     ques.splice(index, 1);
     setQuestions(ques);
   };
+  console.log(window.innerWidth)
+  console.log(window.innerHeight)
 
   return (
     <>
@@ -144,7 +151,7 @@ export default function FormPage() {
         style={{
           background: `url(${bg})`,
           backgroundRepeat: "no-repeat",
-          backgroundSize: "cover ",
+          backgroundSize: "cover",
         }}
       >
         {videoUrl.length !== 0 ? (
@@ -161,7 +168,7 @@ export default function FormPage() {
             <div className="row">
               <div className="col-sm-6">
                 <div
-                  className="d-flex justify-content-center align-items-end flex-column mx-3"
+                  className="d-flex justify-content-center align-items-end flex-column "
                   style={{ height: "100vh" }}
                 >
                   <h1
@@ -183,7 +190,7 @@ export default function FormPage() {
               </div>
               <div className="col-sm-6 col-md-12 col-lg-6">
                 <div
-                  className="d-flex justify-content-start align-items-center "
+                    className="d-flex justify-content-start align-items-center "
                   style={{ height: "100%" }}
                 >
                   <div
@@ -191,7 +198,7 @@ export default function FormPage() {
                     style={{ borderRadius: "20px" }}
                   >
                     <h5 className="text-center py-4 fw-bolder">Magic Maker!</h5>
-                    <div className="row">
+                    <div>
                       <div className="my-2">{renderVideo}</div>
                     </div>
                     <div className="d-flex justify-content-evenly my-3">
@@ -397,6 +404,11 @@ export default function FormPage() {
                           <i className="fa fa-angle-right"></i>
                         </span>
                       </button>
+                      {showAlert && (
+                        <div className="alert alert-success" role="alert">
+                          Data loaded successfully!
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
