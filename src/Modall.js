@@ -12,8 +12,8 @@ export default function Modall(props) {
   };
   const handleDownload = () => {
     const a = document.createElement("a");
-    a.href = `http://216.48.186.249:5002/${urls[active]}`;
-    a.download = `http://216.48.186.249:5002/${urls[active]}`;
+    a.href = `http://209.209.41.154:5004/${urls[active]}`;
+    a.download = `http://209.209.41.154:5004/${urls[active]}`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -51,7 +51,7 @@ export default function Modall(props) {
                   <video
                     controls
                     // autoPlay
-                    src={`http://216.48.186.249:5002/${item}`}
+                    src={`http://209.209.41.154:5004/${item}`}
                     style={{ width: "100%" }}
                   />
                 </Carousel.Item>

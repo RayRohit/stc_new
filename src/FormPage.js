@@ -27,8 +27,8 @@ export default function FormPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let url = googleSelected
-      ? "http://216.48.186.249:5002/cloning"
-      : "http://216.48.186.249:5002/voicecloning";
+      ? "http://209.209.41.154:5004/cloning"
+      : "http://209.209.41.154:5004/voicecloning";
 
     // questions.forEach((question) => {
     //   const videos = files[0];
@@ -102,7 +102,7 @@ export default function FormPage() {
     //   formData.append("textRes", textRes);
     //   formData.append("formatType", checkedd);
     //   axios
-    //     .post("http://216.48.186.249:5002/voicecloning", formData)
+    //     .post("http://209.209.41.154:5004/voicecloning", formData)
     //     .then((res) => {
     //       console.log(res);
     //       setVideoUrl(res.data.file_path);
@@ -137,7 +137,6 @@ export default function FormPage() {
     ques.splice(index, 1);
     setQuestions(ques);
   };
- 
 
   return (
     <>
